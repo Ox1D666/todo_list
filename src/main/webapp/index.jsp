@@ -17,37 +17,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>todo</title>
-    <script>
-        function add(){
-            var desc = $('#desc').val();
-            if(desc === '') {
-                alert("Write description")
-            } else {var create = new Date();
-                var done = false;
-                $('#table tr:last').after('<tr><td>' + desc + '</td><td>' + create +
-                    '</td><td>' + done + '</td></tr>');}
-        }
-    </script>
 </head>
-<body>
-<form action="index.jsp">
+<div class="form-group">
+    <label>Select status to display:</label>
+    </br>
+    <label>
+        <input type="radio">All
+        <input type="radio">Done
+    </label>
+</div>
+<form action="<%=request.getContextPath()%>/index.do" method="post">
     <div class="form-group">
         <label>Add task description</label>
         <br/>
         <label>
-            <textarea name="description" id="desc"></textarea>
+            <input type="text" class="form-control" name="description" value="">
         </label>
+        <br/>
+        <button type="submit" class="btn btn-primary">Add Task</button>
     </div>
 </form>
-<table class="table" id="table">
-    <thead>
-    <th>Description</th>
-    <th>Create</th>
-    <th>Done</th>
-    </thead>
-</table>
-<button type="button" class="btn btn-primary" onclick="return add()">Add task</button>
+<%--<table class="table">--%>
+<%--    <tbody>--%>
+<%--    <c:forEach items="${item}" var="item">--%>
+<%--        <tr>--%>
+<%--            <td>--%>
+<%--                <c:out value="${item}"/>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
+<%--    </c:forEach>--%>
+<%--    </tbody>--%>
+<%--</table>--%>
 </body>
 </html>
