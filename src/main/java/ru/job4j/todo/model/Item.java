@@ -20,6 +20,8 @@ public class Item {
         this.done = done;
     }
 
+    public Item() {
+    }
 
     public int getId() {
         return id;

@@ -1,3 +1,5 @@
+<%@ page import="ru.job4j.todo.store.Store" %>
+<%@ page import="ru.job4j.todo.model.Item" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +20,17 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ page contentType="text/html; charset=UTF-8" %>
     <title>todo</title>
 </head>
+<div class="row">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="<c:url value='/add.do'/>">Add Task</a>
+        </li>
+    </ul>
+</div>
 <div class="form-group">
     <label>Select status to display:</label>
     </br>
@@ -28,27 +39,16 @@
         <input type="radio">Done
     </label>
 </div>
-<form action="<%=request.getContextPath()%>/index.do" method="post">
-    <div class="form-group">
-        <label>Add task description</label>
-        <br/>
-        <label>
-            <input type="text" class="form-control" name="description" value="">
-        </label>
-        <br/>
-        <button type="submit" class="btn btn-primary">Add Task</button>
-    </div>
-</form>
-<%--<table class="table">--%>
-<%--    <tbody>--%>
-<%--    <c:forEach items="${item}" var="item">--%>
-<%--        <tr>--%>
-<%--            <td>--%>
-<%--                <c:out value="${item}"/>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--    </c:forEach>--%>
-<%--    </tbody>--%>
-<%--</table>--%>
+<table class="table">
+    <tbody>
+    <c:forEach items="${item}" var="item">
+        <tr>
+            <td>
+                <c:out value="${item}"/>
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 </body>
 </html>
