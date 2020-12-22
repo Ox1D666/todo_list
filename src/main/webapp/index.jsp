@@ -1,5 +1,6 @@
 <%@ page import="ru.job4j.todo.store.Store" %>
 <%@ page import="ru.job4j.todo.model.Item" %>
+<%@ page import="ru.job4j.todo.store.Hiber" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +25,7 @@
     <%@ page contentType="text/html; charset=UTF-8" %>
     <title>todo</title>
 </head>
+
 <div class="row">
     <ul class="nav">
         <li class="nav-item">
@@ -39,15 +41,28 @@
         <input type="radio">Done
     </label>
 </div>
-<table class="table">
+<h2>Task list:</h2>
+<table class="table" border="3">
+    <thead>
+    <tr>
+        <th>Description</th>
+        <th>Create Date</th>
+        <th>Done</th>
+    </tr>
+    </thead>
     <tbody>
-    <c:forEach items="${item}" var="item">
-        <tr>
-            <td>
-                <c:out value="${item}"/>
-            </td>
-        </tr>
-    </c:forEach>
+    <% Store store = new Hiber();
+        for (Item item : store.findAllItems()) { %>
+    <tr>
+        <td><%= item.getDescription() %></td>
+        <td><%= item.getCreate() %></td>
+        <% if (item.isDone()) {%>
+        <td>✔</td>
+        <% } else { %>
+        <td>✘</td>
+        <% } %>
+    </tr>
+    <% } %>
     </tbody>
 </table>
 </body>

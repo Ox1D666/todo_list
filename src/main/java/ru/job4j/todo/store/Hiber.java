@@ -41,7 +41,7 @@ public class Hiber implements Store {
     @Override
     public boolean delete(int id) {
         boolean result = false;
-        Item item = new Item("", new Timestamp(0), false);
+        Item item = new Item("", new Timestamp(0));
         item.setId(id);
         Session session = sf.openSession();
         session.beginTransaction();

@@ -26,7 +26,7 @@ public class IndexServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         Store store = new Hiber();
         store.create(new Item(req.getParameter("desc"),
-                new Timestamp(new Date().getTime()), false));
+                new Timestamp(new Date().getTime())));
         resp.sendRedirect(req.getContextPath() + "/index.do");
     }
 }

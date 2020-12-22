@@ -14,10 +14,9 @@ public class Item {
     private Timestamp create;
     private boolean done;
 
-    public Item(String description, Timestamp create, boolean done) {
+    public Item(String description, Timestamp create) {
         this.description = description;
         this.create = create;
-        this.done = done;
     }
 
     public Item() {

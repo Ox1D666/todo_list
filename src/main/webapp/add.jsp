@@ -28,7 +28,7 @@
         <label>Add task description</label>
         <br/>
         <label>
-            <input type="text" class="form-control" name="description" value="">
+            <input type="text" class="form-control" name="desc" value="">
         </label>
         <br/>
         <button type="submit" class="btn btn-primary">Add Task</button>
