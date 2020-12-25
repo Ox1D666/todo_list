@@ -1,6 +1,3 @@
-<%@ page import="ru.job4j.todo.store.Store" %>
-<%@ page import="ru.job4j.todo.model.Item" %>
-<%@ page import="ru.job4j.todo.store.Hiber" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,23 +20,25 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ page contentType="text/html; charset=UTF-8" %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>todo</title>
 </head>
-
+<body>
 <div class="row">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/add.do'/>">Add Task</a>
+            <a class="nav-link" href="<c:url value='/add.jsp'/>">Add Task</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/index.do?done=all"/>">Show all tasks</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/index.do?done=true"/>">Show completed tasks</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/index.do?done=false"/>">Show outstanding tasks</a>
         </li>
     </ul>
-</div>
-<div class="form-group">
-    <label>Select status to display:</label>
-    </br>
-    <label>
-        <input type="radio">All
-        <input type="radio">Done
-    </label>
 </div>
 <h2>Task list:</h2>
 <table class="table" border="3">
@@ -51,18 +50,24 @@
     </tr>
     </thead>
     <tbody>
-    <% Store store = new Hiber();
-        for (Item item : store.findAllItems()) { %>
-    <tr>
-        <td><%= item.getDescription() %></td>
-        <td><%= item.getCreate() %></td>
-        <% if (item.isDone()) {%>
-        <td>✔</td>
-        <% } else { %>
-        <td>✘</td>
-        <% } %>
-    </tr>
-    <% } %>
+    <c:forEach items="${items}" var="item">
+        <tr>
+            <td>
+                <c:out value="${item.description}"/>
+            </td>
+            <td>
+                <c:out value="${item.create}"/>
+            </td>
+            <td>
+                <a href='<c:url value="/index.do?id=${item.id}&done=all"/>'>
+                    <c:out value="${item.done}"/>
+                </a>
+                <a href='<c:url value="/index.do?id=${item.id}&action=remove&done=all"/>'>
+                    <i class="fa fa-remove mr-3"></i>
+                </a>
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
 </body>

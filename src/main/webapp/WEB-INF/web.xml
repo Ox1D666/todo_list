@@ -16,12 +16,4 @@
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>CreateServlet</servlet-name>
-    <servlet-class>ru.job4j.todo.servlet.CreateServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CreateServlet</servlet-name>
-    <url-pattern>/add.do</url-pattern>
-  </servlet-mapping>
 </web-app>

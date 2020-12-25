@@ -10,13 +10,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Store store = new Hiber();
-        req.setAttribute("item", store.findAllItems());
+        try {
+            if (req.getParameter("id") != null && req.getParameter("action").equals("remove")) {
+                int id = Integer.parseInt(req.getParameter("id"));
+                store.delete(id);
+            }
+        } catch (NullPointerException e) {
+            e.getMessage();
+        }
+        if ((req.getParameter("id") != null)) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Item item = store.findById(id);
+            item.setDone(!item.isDone());
+            store.update(id, item);
+        }
+        switch (req.getParameter("done")) {
+            case "all" -> req.setAttribute("items", new ArrayList<>(store.findAllItems()));
+            case "true" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(true)));
+            case "false" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(false)));
+        }
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
@@ -27,6 +46,6 @@ public class IndexServlet extends HttpServlet {
         Store store = new Hiber();
         store.create(new Item(req.getParameter("desc"),
                 new Timestamp(new Date().getTime())));
-        resp.sendRedirect(req.getContextPath() + "/index.do");
+        resp.sendRedirect(req.getContextPath() + "/index.do?done=all");
     }
 }
