@@ -24,6 +24,25 @@
     <title>todo</title>
 </head>
 <body>
+<script>
+    function add() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/todo_list/show',
+            // data: ,
+            dataType: 'text',
+            err: 'error'
+        }).done(function (data) {
+            $('#table').after(data);
+        }).fail(function (err) {
+            alert(err);
+        });
+    }
+</script>
+<div class="container">
+    <label>Show item</label>
+    <button type="button" onclick="add()">Add</button>
+</div>
 <div class="row">
     <ul class="nav">
         <li class="nav-item">
@@ -41,7 +60,7 @@
     </ul>
 </div>
 <h2>Task list:</h2>
-<table class="table" border="3">
+<table class="table" id="table" border="3">
     <thead>
     <tr>
         <th>Description</th>

@@ -17,15 +17,10 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Store store = new Hiber();
-        try {
-            if (req.getParameter("id") != null && req.getParameter("action").equals("remove")) {
-                int id = Integer.parseInt(req.getParameter("id"));
-                store.delete(id);
-            }
-        } catch (NullPointerException e) {
-            e.getMessage();
-        }
-        if ((req.getParameter("id") != null)) {
+        if (req.getParameter("id") != null && req.getParameter("action").equals("remove")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            store.delete(id);
+        } else if ((req.getParameter("id") != null)) {
             int id = Integer.parseInt(req.getParameter("id"));
             Item item = store.findById(id);
             item.setDone(!item.isDone());

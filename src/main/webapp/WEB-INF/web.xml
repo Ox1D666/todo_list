@@ -16,4 +16,12 @@
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ShowServlet</servlet-name>
+    <servlet-class>ru.job4j.todo.servlet.ShowServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowServlet</servlet-name>
+    <url-pattern>/show</url-pattern>
+  </servlet-mapping>
 </web-app>
