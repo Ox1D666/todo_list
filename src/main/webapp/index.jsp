@@ -29,19 +29,25 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/todo_list/show',
-            // data: ,
-            dataType: 'text',
-            err: 'error'
-        }).done(function (data) {
-            $('#table').after(data);
-        }).fail(function (err) {
-            alert(err);
-        });
+            success: function (result) {
+                var items = $.parseJSON(result);
+                let table = $('#table')
+                items.forEach(el => {
+                    table.append('<tbody>')
+                    table.append('<tr>')
+                    table.append('<td>' + el.description + '</td>')
+                    table.append('<td>' + el.create + '</td>')
+                    table.append('<td>' + el.done + '</td>')
+                    table.append('</tr>')
+                    table.append('</tbody>')
+                });
+            }
+        })
     }
 </script>
 <div class="container">
     <label>Show item</label>
-    <button type="button" onclick="add()">Add</button>
+    <input type="button" value="Dislay" id="buttonDisplay" onclick="add()">
 </div>
 <div class="row">
     <ul class="nav">
