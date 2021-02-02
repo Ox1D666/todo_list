@@ -22,6 +22,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowServlet</servlet-name>
-    <url-pattern>/show</url-pattern>
+    <url-pattern>/show.do</url-pattern>
   </servlet-mapping>
 </web-app>

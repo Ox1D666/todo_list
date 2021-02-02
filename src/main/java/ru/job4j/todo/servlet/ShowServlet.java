@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +19,23 @@ public class ShowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Store store = new Hiber();
-//        req.setAttribute("items", new ArrayList<>(store.findAllItems()));
+        String desc = req.getParameter("desc");
+        Timestamp create = new Timestamp(System.currentTimeMillis());
+        if (desc != null) {
+            store.create(new Item(req.getParameter("desc"), create));
+        }
         List<Item> items = new ArrayList<>(store.findAllItems());
-//        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-//        Gson gson = new Gson();
-//        for (Item el : items) {
-//            writer.println("<tr><td>" + el.getDescription() + "</td><td>" + el.getCreate() + "</td>" +
-//                    "</td><td>" + el.isDone() + "</td></tr>");
-//        }
-//        writer.flush();
-//        resp.sendRedirect(req.getContextPath() + "/index.do?done=all");
-//        req.getRequestDispatcher("/index.jsp").forward(req, resp);
-//        writer.println("<tr><td>" + "1" + "</td><td>" + "1" + "</td>" +
-//                    "</td><td>" + "1" + "</td></tr>");
-//        writer.print(gson.toJson(new ArrayList<>(store.findAllItems())));
-//        String json = new Gson().toJson(new ArrayList<>(store.findAllItems()));
-//        resp.getWriter().write(json);
-//        writer.flush();
+        if (req.getParameter("done") != null) {
+            switch (req.getParameter("done")) {
+                case "all" -> items = store.findAllItems();
+                case "true" -> items = store.findByStatus(true);
+                case "false" -> items = store.findByStatus(false);
+            }
+        }
         Gson gson = new Gson();
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(items));
         out.flush();
         out.close();
-
     }
 }

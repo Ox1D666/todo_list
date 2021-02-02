@@ -25,12 +25,14 @@
 </head>
 <body>
 <script>
-    function add() {
+    function showAll() {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/todo_list/show',
+            url: 'http://localhost:8080/todo_list/show.do',
+            data: 'done=' + 'all',
             success: function (result) {
                 var items = $.parseJSON(result);
+                $("#table").find("td").remove();
                 let table = $('#table')
                 items.forEach(el => {
                     table.append('<tbody>')
@@ -44,27 +46,140 @@
             }
         })
     }
+
+    function showTrue() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/todo_list/show.do',
+            data: 'done=' + 'true',
+            success: function (result) {
+                var items = $.parseJSON(result);
+                $("#table").find("td").remove();
+                let table = $('#table')
+                items.forEach(el => {
+                    table.append('<tbody>')
+                    table.append('<tr>')
+                    table.append('<td>' + el.description + '</td>')
+                    table.append('<td>' + el.create + '</td>')
+                    table.append('<td>' + el.done + '</td>')
+                    table.append('</tr>')
+                    table.append('</tbody>')
+                });
+            }
+        })
+    }
+
+    function showFalse() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/todo_list/show.do',
+            data: 'done=' + 'false',
+            success: function (result) {
+                var items = $.parseJSON(result);
+                $("#table").find("td").remove();
+                let table = $('#table')
+                items.forEach(el => {
+                    table.append('<tbody>')
+                    table.append('<tr>')
+                    table.append('<td>' + el.description + '</td>')
+                    table.append('<td>' + el.create + '</td>')
+                    table.append('<td>' + el.done + '</td>')
+                    table.append('</tr>')
+                    table.append('</tbody>')
+                });
+            }
+        })
+    }
+
+    function add() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/todo_list/show.do',
+            data: 'desc=' + $('#desc').val(),
+            dataType: 'text',
+            success: function (result) {
+                var items = $.parseJSON(result);
+                $("#table").find("td").remove();
+                let table = $('#table')
+                items.forEach(el => {
+                    table.append('<tbody>')
+                    table.append('<tr>')
+                    table.append('<td>' + el.description + '</td>')
+                    table.append('<td>' + el.create + '</td>')
+                    table.append('<td>' + el.done + '</td>')
+                    table.append('</tr>')
+                    table.append('</tbody>')
+                });
+            }
+        })
+    }
+
+    function showChecked() {
+        if ($('#checkbox').is(':checked')) {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/todo_list/show.do',
+                data: 'done=' + 'all',
+                success: function (result) {
+                    var items = $.parseJSON(result);
+                    $("#table").find("td").remove();
+                    let table = $('#table')
+                    items.forEach(el => {
+                        table.append('<tbody>')
+                        table.append('<tr>')
+                        table.append('<td>' + el.description + '</td>')
+                        table.append('<td>' + el.create + '</td>')
+                        table.append('<td>' + el.done + '</td>')
+                        table.append('</tr>')
+                        table.append('</tbody>')
+                    });
+                }
+            })
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/todo_list/show.do',
+                data: 'done=' + 'false',
+                success: function (result) {
+                    var items = $.parseJSON(result);
+                    $("#table").find("td").remove();
+                    let table = $('#table')
+                    items.forEach(el => {
+                        table.append('<tbody>')
+                        table.append('<tr>')
+                        table.append('<td>' + el.description + '</td>')
+                        table.append('<td>' + el.create + '</td>')
+                        table.append('<td>' + el.done + '</td>')
+                        table.append('</tr>')
+                        table.append('</tbody>')
+                    });
+                }
+            })
+        };
+    }
+
 </script>
-<div class="container">
-    <label>Show item</label>
-    <input type="button" value="Dislay" id="buttonDisplay" onclick="add()">
-</div>
-<div class="row">
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/add.jsp'/>">Add Task</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/index.do?done=all"/>">Show all tasks</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/index.do?done=true"/>">Show completed tasks</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/index.do?done=false"/>">Show outstanding tasks</a>
-        </li>
-    </ul>
-</div>
+
+<label>Show all tasks</label>
+<input type="button" value="Display" onclick="showAll()">
+<br/>
+<label>Show done tasks</label>
+<input type="button" value="Display" onclick="showTrue()">
+<br/>
+<label>Show uncompleted tasks</label>
+<input type="button" value="Display" onclick="showFalse()">
+<br/>
+<label>Add task description</label>
+<br/>
+<label>
+    <input type="text" class="form-control" id="desc" value="">
+</label>
+<br/>
+<button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
+<br/>
+<label>
+    <input type="checkbox" id="checkbox" onclick="showChecked()">Show
+</label>
 <h2>Task list:</h2>
 <table class="table" id="table" border="3">
     <thead>
