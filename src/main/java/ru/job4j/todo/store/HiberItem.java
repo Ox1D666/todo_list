@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Hiber implements Store {
+public class HiberItem implements Store<Item> {
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
     private final SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 
@@ -52,8 +52,7 @@ public class Hiber implements Store {
         return result;
     }
 
-    @Override
-    public List<Item> findAllItems() {
+    public List<Item> findAll() {
         Session session = sf.openSession();
         session.beginTransaction();
         CriteriaBuilder cb = session.getCriteriaBuilder();

@@ -13,6 +13,10 @@ public class Item {
     @Column(name = "create_date")
     private Timestamp create;
     private boolean done;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    private User user;
 
     public Item(String description, Timestamp create) {
         this.description = description;
@@ -52,5 +56,13 @@ public class Item {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

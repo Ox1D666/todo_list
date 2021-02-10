@@ -160,6 +160,10 @@
 
 </script>
 
+<li class="nav-item">
+    <a class="nav-link" href="<c:url value='/auth.do'/>" methods="post">Sign in</a>
+</li>
+
 <label>Show all tasks</label>
 <input type="button" value="Display" onclick="showAll()">
 <br/>

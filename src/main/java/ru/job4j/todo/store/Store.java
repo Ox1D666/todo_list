@@ -1,14 +1,11 @@
 package ru.job4j.todo.store;
 
-import ru.job4j.todo.model.Item;
-
 import java.util.List;
 
-public interface Store {
-    Item create(Item item);
-    boolean update(int id, Item item);
+public interface Store<T> {
+    T create(T element);
+    boolean update(int id, T element);
     boolean delete(int id);
-    List<Item> findAllItems();
-    List<Item> findByStatus(boolean status);
-    Item findById(int id);
+    List<T> findAll();
+    T findById(int id);
 }
