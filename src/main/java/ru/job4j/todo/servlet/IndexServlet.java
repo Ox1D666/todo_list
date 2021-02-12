@@ -26,10 +26,14 @@ public class IndexServlet extends HttpServlet {
             item.setDone(!item.isDone());
             store.update(id, item);
         }
-        switch (req.getParameter("done")) {
-            case "all" -> req.setAttribute("items", new ArrayList<>(store.findAll()));
-            case "true" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(true)));
-            case "false" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(false)));
+        if (req.getParameter("done") != null) {
+            switch (req.getParameter("done")) {
+                case "all" -> req.setAttribute("items", new ArrayList<>(store.findAll()));
+                case "true" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(true)));
+                case "false" -> req.setAttribute("items", new ArrayList<>(store.findByStatus(false)));
+            }
+        } else {
+            req.setAttribute("items", new ArrayList<>(store.findAll()));
         }
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
@@ -38,7 +42,7 @@ public class IndexServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
-        Store store = new HiberItem();
+        HiberItem store = new HiberItem();
         store.create(new Item(req.getParameter("desc"),
                 new Timestamp(new Date().getTime())));
         resp.sendRedirect(req.getContextPath() + "/index.do?done=all");

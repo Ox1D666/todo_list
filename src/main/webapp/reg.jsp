@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -16,33 +15,42 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        function validate() {
+            valid = true;
+            if ($('#login').val() === '') {
+                alert("Input login");
+                valid = false;
+            }
+            if ($('#pwd').val() === '') {
+                alert("Input password");
+                valid = false;
+            }
+            return valid;
+        }
+    </script>
 
-    <title>Authorisation</title>
+    <title>Check in</title>
 </head>
 <body>
-<div class="container pt-3">
-    <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Authorisation
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Create new user
+    </div>
+    <div class="card-body">
+        <form action="<%=request.getContextPath()%>/reg.do" method="post">
+            <div class="form-group">
+                <label>Login</label>
+                <input type="text" class="form-control" name="login" id="login">
             </div>
-            <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
-                    <div class="form-group">
-                        <label>Login</label>
-                        <input type="text" class="form-control" name="login">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="text" class="form-control" name="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enter</button>
-                </form>
+            <br>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control" name="password" id="pwd">
             </div>
-            <div class="card-body">
-                <a href="<c:url value='reg.jsp'/>">Check in</a>
-            </div>
-        </div>
+            <br>
+            <button type="submit" class="btn btn-primary" onclick="return validate()">Create</button>
+        </form>
     </div>
 </div>
 </body>

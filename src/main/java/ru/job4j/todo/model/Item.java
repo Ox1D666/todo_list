@@ -15,7 +15,6 @@ public class Item {
     private boolean done;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @SuppressWarnings("JpaAttributeTypeInspection")
     private User user;
 
     public Item(String description, Timestamp create) {

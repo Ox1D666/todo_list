@@ -22,100 +22,8 @@
     <%@ page contentType="text/html; charset=UTF-8" %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>todo</title>
-</head>
-<body>
-<script>
-    function showAll() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/todo_list/show.do',
-            data: 'done=' + 'all',
-            success: function (result) {
-                var items = $.parseJSON(result);
-                $("#table").find("td").remove();
-                let table = $('#table')
-                items.forEach(el => {
-                    table.append('<tbody>')
-                    table.append('<tr>')
-                    table.append('<td>' + el.description + '</td>')
-                    table.append('<td>' + el.create + '</td>')
-                    table.append('<td>' + el.done + '</td>')
-                    table.append('</tr>')
-                    table.append('</tbody>')
-                });
-            }
-        })
-    }
-
-    function showTrue() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/todo_list/show.do',
-            data: 'done=' + 'true',
-            success: function (result) {
-                var items = $.parseJSON(result);
-                $("#table").find("td").remove();
-                let table = $('#table')
-                items.forEach(el => {
-                    table.append('<tbody>')
-                    table.append('<tr>')
-                    table.append('<td>' + el.description + '</td>')
-                    table.append('<td>' + el.create + '</td>')
-                    table.append('<td>' + el.done + '</td>')
-                    table.append('</tr>')
-                    table.append('</tbody>')
-                });
-            }
-        })
-    }
-
-    function showFalse() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/todo_list/show.do',
-            data: 'done=' + 'false',
-            success: function (result) {
-                var items = $.parseJSON(result);
-                $("#table").find("td").remove();
-                let table = $('#table')
-                items.forEach(el => {
-                    table.append('<tbody>')
-                    table.append('<tr>')
-                    table.append('<td>' + el.description + '</td>')
-                    table.append('<td>' + el.create + '</td>')
-                    table.append('<td>' + el.done + '</td>')
-                    table.append('</tr>')
-                    table.append('</tbody>')
-                });
-            }
-        })
-    }
-
-    function add() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/todo_list/show.do',
-            data: 'desc=' + $('#desc').val(),
-            dataType: 'text',
-            success: function (result) {
-                var items = $.parseJSON(result);
-                $("#table").find("td").remove();
-                let table = $('#table')
-                items.forEach(el => {
-                    table.append('<tbody>')
-                    table.append('<tr>')
-                    table.append('<td>' + el.description + '</td>')
-                    table.append('<td>' + el.create + '</td>')
-                    table.append('<td>' + el.done + '</td>')
-                    table.append('</tr>')
-                    table.append('</tbody>')
-                });
-            }
-        })
-    }
-
-    function showChecked() {
-        if ($('#checkbox').is(':checked')) {
+    <script>
+        function showAll() {
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/todo_list/show.do',
@@ -135,7 +43,31 @@
                     });
                 }
             })
-        } else {
+        }
+
+        function showTrue() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/todo_list/show.do',
+                data: 'done=' + 'true',
+                success: function (result) {
+                    var items = $.parseJSON(result);
+                    $("#table").find("td").remove();
+                    let table = $('#table')
+                    items.forEach(el => {
+                        table.append('<tbody>')
+                        table.append('<tr>')
+                        table.append('<td>' + el.description + '</td>')
+                        table.append('<td>' + el.create + '</td>')
+                        table.append('<td>' + el.done + '</td>')
+                        table.append('</tr>')
+                        table.append('</tbody>')
+                    });
+                }
+            })
+        }
+
+        function showFalse() {
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/todo_list/show.do',
@@ -155,15 +87,80 @@
                     });
                 }
             })
-        };
-    }
+        }
 
-</script>
+        function add() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/todo_list/show.do',
+                data: 'desc=' + $('#desc').val(),
+                dataType: 'text',
+                success: function (result) {
+                    var items = $.parseJSON(result);
+                    $("#table").find("td").remove();
+                    let table = $('#table')
+                    items.forEach(el => {
+                        table.append('<tbody>')
+                        table.append('<tr>')
+                        table.append('<td>' + el.description + '</td>')
+                        table.append('<td>' + el.create + '</td>')
+                        table.append('<td>' + el.done + '</td>')
+                        table.append('</tr>')
+                        table.append('</tbody>')
+                    });
+                }
+            })
+        }
 
+        function showChecked() {
+            if ($('#checkbox').is(':checked')) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/todo_list/show.do',
+                    data: 'done=' + 'all',
+                    success: function (result) {
+                        var items = $.parseJSON(result);
+                        $("#table").find("td").remove();
+                        let table = $('#table')
+                        items.forEach(el => {
+                            table.append('<tbody>')
+                            table.append('<tr>')
+                            table.append('<td>' + el.description + '</td>')
+                            table.append('<td>' + el.create + '</td>')
+                            table.append('<td>' + el.done + '</td>')
+                            table.append('</tr>')
+                            table.append('</tbody>')
+                        });
+                    }
+                })
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/todo_list/show.do',
+                    data: 'done=' + 'false',
+                    success: function (result) {
+                        var items = $.parseJSON(result);
+                        $("#table").find("td").remove();
+                        let table = $('#table')
+                        items.forEach(el => {
+                            table.append('<tbody>')
+                            table.append('<tr>')
+                            table.append('<td>' + el.description + '</td>')
+                            table.append('<td>' + el.create + '</td>')
+                            table.append('<td>' + el.done + '</td>')
+                            table.append('</tr>')
+                            table.append('</tbody>')
+                        });
+                    }
+                })
+            };
+        }
+    </script>
+</head>
+<body>
 <li class="nav-item">
-    <a class="nav-link" href="<c:url value='/auth.do'/>" methods="post">Sign in</a>
+    <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
 </li>
-
 <label>Show all tasks</label>
 <input type="button" value="Display" onclick="showAll()">
 <br/>
@@ -191,6 +188,7 @@
         <th>Description</th>
         <th>Create Date</th>
         <th>Done</th>
+        <th>Author</th>
     </tr>
     </thead>
     <tbody>
@@ -209,6 +207,9 @@
                 <a href='<c:url value="/index.do?id=${item.id}&action=remove&done=all"/>'>
                     <i class="fa fa-remove mr-3"></i>
                 </a>
+            </td>
+            <td>
+                <c:out value="${item.user}"/>
             </td>
         </tr>
     </c:forEach>
