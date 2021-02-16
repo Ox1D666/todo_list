@@ -2,6 +2,7 @@ package ru.job4j.todo.servlet;
 
 import com.google.gson.Gson;
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.HiberItem;
 import ru.job4j.todo.store.Store;
 
@@ -20,9 +21,11 @@ public class ShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HiberItem store = new HiberItem();
         String desc = req.getParameter("desc");
+        String userId = req.getParameter("user_id");
         Timestamp create = new Timestamp(System.currentTimeMillis());
         if (desc != null) {
-            store.create(new Item(req.getParameter("desc"), create));
+            store.create(new Item(req.getParameter("desc"), create,
+                    new User(Integer.parseInt(userId))));
         }
         List<Item> items = new ArrayList<>(store.findAll());
         if (req.getParameter("done") != null) {

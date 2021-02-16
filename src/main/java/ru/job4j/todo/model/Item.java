@@ -22,6 +22,12 @@ public class Item {
         this.create = create;
     }
 
+    public Item(String description, Timestamp create, User user) {
+        this.description = description;
+        this.create = create;
+        this.user = user;
+    }
+
     public Item() {
     }
 
@@ -63,5 +69,16 @@ public class Item {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", create=" + create +
+                ", done=" + done +
+                ", user=" + user +
+                '}';
     }
 }
