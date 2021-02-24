@@ -29,11 +29,10 @@
             return valid;
         }
     </script>
-
     <title>Check in</title>
 </head>
 <body>
-<div class="card" style="width: 100%">
+<div class="container">
     <div class="card-header">
         Create new user
     </div>
@@ -43,12 +42,10 @@
                 <label>Login</label>
                 <input type="text" class="form-control" name="login" id="login">
             </div>
-            <br>
             <div class="form-group">
                 <label>Password</label>
                 <input type="text" class="form-control" name="password" id="pwd">
             </div>
-            <br>
             <button type="submit" class="btn btn-primary" onclick="return validate()">Create</button>
         </form>
     </div>

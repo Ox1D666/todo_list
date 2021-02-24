@@ -18,6 +18,20 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Authorisation</title>
+    <script>
+        function validate() {
+            valid = true;
+            if ($('#login').val() === '') {
+                alert("Input login");
+                valid = false;
+            }
+            if ($('#pwd').val() === '') {
+                alert("Input password");
+                valid = false;
+            }
+            return valid;
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -30,13 +44,13 @@
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
                         <label>Login</label>
-                        <input type="text" class="form-control" name="login">
+                        <input type="text" class="form-control" name="login" id="login">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="text" class="form-control" name="password" id="pwd">
                     </div>
-                    <button type="submit" class="btn btn-primary">Enter</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Enter</button>
                 </form>
             </div>
             <div class="card-body">

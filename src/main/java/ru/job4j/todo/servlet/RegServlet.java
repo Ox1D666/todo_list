@@ -15,6 +15,6 @@ public class RegServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         HiberUser store = new HiberUser();
         store.create(new User(req.getParameter("login"), req.getParameter("password")));
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+        resp.sendRedirect(req.getContextPath() + "/login.jsp");
     }
 }

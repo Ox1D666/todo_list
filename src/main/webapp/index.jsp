@@ -180,28 +180,16 @@
         <div class="mx-auto"><h2 class="text-black display-5">TODO LIST
         </h2></div>
     </div>
-    <ul>
-        <li class="nav-item">
+    <br><ul><li class="nav-item">
             <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
-        </li>
-    </ul>
-    <label>Show all tasks</label>
-    <input type="button" value="Display" onclick="showAll()">
-    <label>Show done tasks</label>
-    <input type="button" value="Display" onclick="showTrue()">
-    <label>Show uncompleted tasks</label>
-    <input type="button" value="Display" onclick="showFalse()">
-    <br/><label>Add task description</label>
-    <br/>
-    <label>
-        <input type="text" class="form-control" id="desc" value="">
-    </label>
-    <br/>
-    <button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
-    <br/>
-    <label>
-        <input type="checkbox" id="checkbox" onclick="showChecked()">Show all/not completed
-    </label>
+        </li></ul>
+    <input type="button" value="Show all tasks" onclick="showAll()">
+    <input type="button" value="Show done tasks" onclick="showTrue()">
+    <input type="button" value="Show uncompleted tasks" onclick="showFalse()">
+    <br><br><label>Add task description</label>
+    <br><input type="text" class="form-control" id="desc">
+    <br><button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
+    <br><br><input type="checkbox" id="checkbox" onclick="showChecked()">Show all/not completed
     <h2>Task list:</h2>
     <table class="table" id="table" border="3">
         <thead>
