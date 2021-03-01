@@ -33,75 +33,6 @@
         }
     </style>
     <script>
-        function showAll() {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/todo_list/show.do',
-                data: 'done=' + 'all',
-                success: function (result) {
-                    var items = $.parseJSON(result);
-                    $("#table").find("td").remove();
-                    let table = $('#table')
-                    items.forEach(el => {
-                        table.append('<tbody>')
-                        table.append('<tr>')
-                        table.append('<td>' + el.description + '</td>')
-                        table.append('<td>' + el.create + '</td>')
-                        table.append('<td>' + el.done + '</td>')
-                        table.append('<td>' + el.user.login + '</td>')
-                        table.append('</tr>')
-                        table.append('</tbody>')
-                    });
-                }
-            })
-        }
-
-        function showTrue() {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/todo_list/show.do',
-                data: 'done=' + 'true',
-                success: function (result) {
-                    var items = $.parseJSON(result);
-                    $("#table").find("td").remove();
-                    let table = $('#table')
-                    items.forEach(el => {
-                        table.append('<tbody>')
-                        table.append('<tr>')
-                        table.append('<td>' + el.description + '</td>')
-                        table.append('<td>' + el.create + '</td>')
-                        table.append('<td>' + el.done + '</td>')
-                        table.append('<td>' + el.user.login + '</td>')
-                        table.append('</tr>')
-                        table.append('</tbody>')
-                    });
-                }
-            })
-        }
-
-        function showFalse() {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/todo_list/show.do',
-                data: 'done=' + 'false',
-                success: function (result) {
-                    var items = $.parseJSON(result);
-                    $("#table").find("td").remove();
-                    let table = $('#table')
-                    items.forEach(el => {
-                        table.append('<tbody>')
-                        table.append('<tr>')
-                        table.append('<td>' + el.description + '</td>')
-                        table.append('<td>' + el.create + '</td>')
-                        table.append('<td>' + el.done + '</td>')
-                        table.append('<td>' + el.user.login + '</td>')
-                        table.append('</tr>')
-                        table.append('</tbody>')
-                    });
-                }
-            })
-        }
-
         function add() {
             $.ajax({
                 type: 'GET',
@@ -111,7 +42,7 @@
                 success: function (result) {
                     var items = $.parseJSON(result);
                     $("#table").find("td").remove();
-                    let table = $('#table')
+                    let table = $('#table');
                     items.forEach(el => {
                         table.append('<tbody>')
                         table.append('<tr>')
@@ -122,6 +53,22 @@
                         table.append('</tr>')
                         table.append('</tbody>')
                     });
+                }
+            })
+        }
+
+        function getCategory() {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/todo_list/category.do',
+                success: function (result) {
+                    var items = $.parseJSON(result);
+                    let select = $('#categories');
+                    items.forEach(el => {
+                        select.append($("<option></option>")
+                            .text(el['name']));
+
+                    })
                 }
             })
         }
@@ -170,7 +117,6 @@
                     }
                 })
             }
-            ;
         }
     </script>
 </head>
@@ -180,15 +126,23 @@
         <div class="mx-auto"><h2 class="text-black display-5">TODO LIST
         </h2></div>
     </div>
-    <br><ul><li class="nav-item">
+    <br>
+    <ul>
+        <li class="nav-item">
             <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
-        </li></ul>
-    <input type="button" value="Show all tasks" onclick="showAll()">
-    <input type="button" value="Show done tasks" onclick="showTrue()">
-    <input type="button" value="Show uncompleted tasks" onclick="showFalse()">
+        </li>
+    </ul>
     <br><br><label>Add task description</label>
     <br><input type="text" class="form-control" id="desc">
-    <br><button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
+    <br>
+    <div class="col-sm-5">
+        <button type="button" onclick="getCategory()">Show Category</button>
+        <br><br><select class="form-control" name="categories" id="categories" multiple>
+    </select>
+
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
     <br><br><input type="checkbox" id="checkbox" onclick="showChecked()">Show all/not completed
     <h2>Task list:</h2>
     <table class="table" id="table" border="3">
