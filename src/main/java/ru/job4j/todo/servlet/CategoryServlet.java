@@ -16,7 +16,7 @@ import java.util.List;
 public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Store<Category> hiberCat = new HiberCat();
+        HiberCat hiberCat = new HiberCat();
         List<Category> categories = hiberCat.findAll();
         Gson gson = new Gson();
         PrintWriter out = resp.getWriter();

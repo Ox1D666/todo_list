@@ -22,6 +22,7 @@ public class ShowServlet extends HttpServlet {
         HiberItem store = new HiberItem();
         String desc = req.getParameter("desc");
         String userId = req.getParameter("user_id");
+        String[] cIDs = req.getParameterValues("cIDs");
         Timestamp create = new Timestamp(System.currentTimeMillis());
         if (desc != null) {
             store.create(new Item(req.getParameter("desc"), create,

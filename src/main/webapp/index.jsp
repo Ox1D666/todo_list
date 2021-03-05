@@ -37,7 +37,9 @@
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/todo_list/show.do',
-                data: {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>},
+                data: {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>
+                    , 'cIDs' : $('#categories').val()
+                },
                 dataType: 'text',
                 success: function (result) {
                     var items = $.parseJSON(result);
@@ -66,11 +68,12 @@
                     let select = $('#categories');
                     items.forEach(el => {
                         select.append($("<option></option>")
-                            .text(el['name']));
-
+                                .attr("value", el.id)
+                                .text(el.name));
                     })
                 }
             })
+
         }
 
         function showChecked() {
@@ -127,6 +130,9 @@
         </h2></div>
     </div>
     <br>
+    <li class="nav-item">
+        <a class="nav-link" href="<c:url value='/humans'/>"> Create</a>
+    </li>
     <ul>
         <li class="nav-item">
             <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
@@ -137,9 +143,7 @@
     <br>
     <div class="col-sm-5">
         <button type="button" onclick="getCategory()">Show Category</button>
-        <br><br><select class="form-control" name="categories" id="categories" multiple>
-    </select>
-
+        <br><br><select class="form-control" name="categories" id="categories" multiple></select>
     </div>
     <br>
     <button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>

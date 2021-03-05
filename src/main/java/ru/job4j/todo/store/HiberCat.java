@@ -10,6 +10,7 @@ import ru.job4j.todo.model.Category;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HiberCat implements Store<Category> {
@@ -33,19 +34,16 @@ public class HiberCat implements Store<Category> {
 
     @Override
     public List<Category> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-//        CriteriaBuilder cb =  session.getCriteriaBuilder();
-//        CriteriaQuery<Category> categoryCriteria = cb.createQuery(Category.class);
-//        Root<Category> categoryRoot = categoryCriteria.from(Category.class);
-//        categoryCriteria.select(categoryRoot);
-//        List<Category> result = session.createQuery(categoryCriteria).getResultList();
-        List<Category> result = session.createQuery(
-                "select distinct c from Category c join fetch c.items"
-        ).list();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        List<Category> rsl = new ArrayList<>();
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            rsl = session.createQuery("select c from Category c", Category.class).list();
+            rsl.forEach(System.out::println);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            sf.getCurrentSession().getTransaction().rollback();
+        }
+        return rsl;
     }
 
     @Override
