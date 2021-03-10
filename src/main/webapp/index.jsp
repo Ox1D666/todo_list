@@ -34,15 +34,24 @@
     </style>
     <script>
         function add() {
+            // var selected = document.querySelectorAll('#categories option:checked');
+            // var values = Array.from(selected).map(el => el.value);
+            let len = document.getElementById("categories").options.length;
+            let values = [];
+            let index = 0;
+            for (let i = 0; i < len; i++) {
+                if (document.getElementById("categories").options[i].selected === true) {
+                    values[index] = document.getElementById("categories").options[i].value;
+                    index++;
+                }
+            }
+            alert(values)
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/todo_list/show.do',
-                data: {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>
-                    , 'cIDs' : $('#categories').val()
-                },
-                dataType: 'text',
+                data: {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>, 'cIDs' : values},
                 success: function (result) {
-                    var items = $.parseJSON(result);
+                    let items = $.parseJSON(result);
                     $("#table").find("td").remove();
                     let table = $('#table');
                     items.forEach(el => {
@@ -64,7 +73,7 @@
                 type: 'POST',
                 url: 'http://localhost:8080/todo_list/category.do',
                 success: function (result) {
-                    var items = $.parseJSON(result);
+                    let items = $.parseJSON(result);
                     let select = $('#categories');
                     items.forEach(el => {
                         select.append($("<option></option>")
@@ -83,7 +92,7 @@
                     url: 'http://localhost:8080/todo_list/show.do',
                     data: 'done=' + 'all',
                     success: function (result) {
-                        var items = $.parseJSON(result);
+                        let items = $.parseJSON(result);
                         $("#table").find("td").remove();
                         let table = $('#table')
                         items.forEach(el => {
@@ -104,7 +113,7 @@
                     url: 'http://localhost:8080/todo_list/show.do',
                     data: 'done=' + 'false',
                     success: function (result) {
-                        var items = $.parseJSON(result);
+                        let items = $.parseJSON(result);
                         $("#table").find("td").remove();
                         let table = $('#table')
                         items.forEach(el => {
@@ -129,10 +138,6 @@
         <div class="mx-auto"><h2 class="text-black display-5">TODO LIST
         </h2></div>
     </div>
-    <br>
-    <li class="nav-item">
-        <a class="nav-link" href="<c:url value='/humans'/>"> Create</a>
-    </li>
     <ul>
         <li class="nav-item">
             <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
@@ -146,7 +151,7 @@
         <br><br><select class="form-control" name="categories" id="categories" multiple></select>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary" onclick="add()">Add Task</button>
+    <button type="button" class="btn btn-primary" onclick="add()">Add Task</button>
     <br><br><input type="checkbox" id="checkbox" onclick="showChecked()">Show all/not completed
     <h2>Task list:</h2>
     <table class="table" id="table" border="3">

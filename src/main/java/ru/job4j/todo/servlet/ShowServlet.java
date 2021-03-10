@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.HiberItem;
-import ru.job4j.todo.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
