@@ -45,11 +45,12 @@
                     index++;
                 }
             }
-            alert(values)
+            let data = {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>, 'cIDs' : values};
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: 'http://localhost:8080/todo_list/show.do',
-                data: {'desc': $('#desc').val(), 'user_id': <%=session.getAttribute("user_id")%>, 'cIDs' : values},
+                contentType: "application/json",
+                data: JSON.stringify(data),
                 success: function (result) {
                     let items = $.parseJSON(result);
                     $("#table").find("td").remove();
@@ -60,6 +61,7 @@
                         table.append('<td>' + el.description + '</td>')
                         table.append('<td>' + el.create + '</td>')
                         table.append('<td>' + el.done + '</td>')
+                        table.append('<td>' + el.categories + '</td>')
                         table.append('<td>' + el.user.login + '</td>')
                         table.append('</tr>')
                         table.append('</tbody>')
@@ -90,6 +92,7 @@
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:8080/todo_list/show.do',
+                    contentType: "application/json",
                     data: 'done=' + 'all',
                     success: function (result) {
                         let items = $.parseJSON(result);
@@ -101,6 +104,7 @@
                             table.append('<td>' + el.description + '</td>')
                             table.append('<td>' + el.create + '</td>')
                             table.append('<td>' + el.done + '</td>')
+                            table.append('<td>' + el.categories + '</td>')
                             table.append('<td>' + el.user.login + '</td>')
                             table.append('</tr>')
                             table.append('</tbody>')
@@ -111,6 +115,7 @@
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:8080/todo_list/show.do',
+                    contentType: "application/json",
                     data: 'done=' + 'false',
                     success: function (result) {
                         let items = $.parseJSON(result);
@@ -122,6 +127,7 @@
                             table.append('<td>' + el.description + '</td>')
                             table.append('<td>' + el.create + '</td>')
                             table.append('<td>' + el.done + '</td>')
+                            table.append('<td>' + el.categories + '</td>')
                             table.append('<td>' + el.user.login + '</td>')
                             table.append('</tr>')
                             table.append('</tbody>')
@@ -160,6 +166,7 @@
             <th>Description</th>
             <th>Create Date</th>
             <th>Done</th>
+            <th>Categories</th>
             <th>Author</th>
         </tr>
         </thead>

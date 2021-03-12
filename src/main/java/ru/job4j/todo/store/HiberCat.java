@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.todo.model.Category;
+import ru.job4j.todo.model.Item;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -48,6 +49,11 @@ public class HiberCat implements Store<Category> {
 
     @Override
     public Category findById(int id) {
-        return null;
+        Session session = sf.openSession();
+        session.beginTransaction();
+        Category result = session.get(Category.class, id);
+        session.getTransaction().commit();
+        session.close();
+        return result;
     }
 }
