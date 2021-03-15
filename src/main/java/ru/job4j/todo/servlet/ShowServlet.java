@@ -53,29 +53,28 @@ public class ShowServlet extends HttpServlet {
         if (parameters.getDesc() != null) {
             itemStore.create(new Item(parameters.getDesc(),
                     create,
-                    new User(Integer.parseInt(parameters.getId())),
+                    new User(Integer.parseInt(parameters.getUser_id())),
                     categories));
         }
-        resp.sendRedirect(req.getContextPath() + "/show.do");
     }
 
     class Parameters {
-        private String id;
+        private String user_id;
         private String desc;
         private String[] cIDs;
 
         public Parameters(String id, String desc, String[] cIDs) {
-            this.id = id;
+            this.user_id = id;
             this.desc = desc;
             this.cIDs = cIDs;
         }
 
-        public String getId() {
-            return id;
+        public String getUser_id() {
+            return user_id;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
 
         public String getDesc() {
