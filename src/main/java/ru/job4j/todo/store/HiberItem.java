@@ -77,16 +77,14 @@ public class HiberItem implements Store<Item> {
     }
 
     public List<Item> findByStatus(boolean status) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Item> itemCriteria = cb.createQuery(Item.class);
-        Root<Item> itemRoot = itemCriteria.from(Item.class);
-        itemCriteria.select(itemRoot);
-        itemCriteria.where(cb.equal(itemRoot.get("done"), status));
-        List<Item> result = session.createQuery(itemCriteria).getResultList();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        List<Item> rsl = new ArrayList<>();
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            rsl = session.createQuery("select distinct c from Item c join fetch c.categories where c.done=false").list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            sf.getCurrentSession().getTransaction().rollback();
+        }
+        return rsl;
     }
 }

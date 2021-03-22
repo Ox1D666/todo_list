@@ -124,14 +124,18 @@
                     success: function (result) {
                         let items = $.parseJSON(result);
                         $("#table").find("td").remove();
-                        let table = $('#table')
+                        let table = $('#table');
                         items.forEach(el => {
+                            let categ = ' '
+                            el.categories.forEach(cat => {
+                                categ = categ + ' ' + cat.name + ' / '
+                            })
                             table.append('<tbody>')
                             table.append('<tr>')
                             table.append('<td>' + el.description + '</td>')
                             table.append('<td>' + el.create + '</td>')
                             table.append('<td>' + el.done + '</td>')
-                            table.append('<td>' + el.categories + '</td>')
+                            table.append('<td>' + categ + '</td>')
                             table.append('<td>' + el.user.login + '</td>')
                             table.append('</tr>')
                             table.append('</tbody>')
@@ -153,7 +157,7 @@
             <a class="nav-link" href="<c:url value='/login.jsp'/>"> <c:out value="${user.login}"/> | Sign in</a>
         </li>
     </ul>
-    <br><br><label>Add task description</label>
+    <br><label>Add task description</label>
     <br><input type="text" class="form-control" id="desc">
     <br>
     <div class="col-sm-5">
