@@ -5,12 +5,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Item;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HiberItem implements Store<Item> {
@@ -41,7 +43,7 @@ public class HiberItem implements Store<Item> {
     @Override
     public boolean delete(int id) {
         boolean result = false;
-        Item item = new Item("", new Timestamp(0));
+        Item item = new Item();
         item.setId(id);
         Session session = sf.openSession();
         session.beginTransaction();
@@ -53,16 +55,15 @@ public class HiberItem implements Store<Item> {
     }
 
     public List<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Item> itemCriteria = cb.createQuery(Item.class);
-        Root<Item> itemRoot = itemCriteria.from(Item.class);
-        itemCriteria.select(itemRoot);
-        List<Item> result = session.createQuery(itemCriteria).getResultList();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        List<Item> rsl = new ArrayList<>();
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            rsl = session.createQuery("select distinct c from Item c join fetch c.categories").list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            sf.getCurrentSession().getTransaction().rollback();
+        }
+        return rsl;
     }
 
     @Override

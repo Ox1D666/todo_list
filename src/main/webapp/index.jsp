@@ -97,14 +97,18 @@
                     success: function (result) {
                         let items = $.parseJSON(result);
                         $("#table").find("td").remove();
-                        let table = $('#table')
+                        let table = $('#table');
                         items.forEach(el => {
+                            let categ = ' '
+                            el.categories.forEach(cat => {
+                                categ = categ + ' ' + cat.name + ' / '
+                            })
                             table.append('<tbody>')
                             table.append('<tr>')
                             table.append('<td>' + el.description + '</td>')
                             table.append('<td>' + el.create + '</td>')
                             table.append('<td>' + el.done + '</td>')
-                            table.append('<td>' + el.categories + '</td>')
+                            table.append('<td>' + categ + '</td>')
                             table.append('<td>' + el.user.login + '</td>')
                             table.append('</tr>')
                             table.append('</tbody>')

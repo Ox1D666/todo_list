@@ -21,11 +21,6 @@ public class Item {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Category> categories = new ArrayList<>();
 
-    public Item(String description, Timestamp create) {
-        this.description = description;
-        this.create = create;
-    }
-
     public Item(String description, Timestamp create, User user, List<Category> categories) {
         this.description = description;
         this.create = create;
@@ -34,6 +29,10 @@ public class Item {
     }
 
     public Item() {
+    }
+
+    public void addCategories(Category category) {
+        this.categories.add(category);
     }
 
     public int getId() {

@@ -38,8 +38,7 @@ public class HiberCat implements Store<Category> {
         List<Category> rsl = new ArrayList<>();
         try (Session session = sf.openSession()) {
             session.beginTransaction();
-            rsl = session.createQuery("select c from Category c", Category.class).list();
-            rsl.forEach(System.out::println);
+            rsl = session.createQuery("from Category c").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             sf.getCurrentSession().getTransaction().rollback();

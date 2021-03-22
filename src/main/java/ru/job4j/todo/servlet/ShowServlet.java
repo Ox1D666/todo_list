@@ -20,7 +20,6 @@ import java.util.List;
 public class ShowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
         Gson gson = new Gson();
         HiberItem store = new HiberItem();
         List<Item> items = new ArrayList<>(store.findAll());
